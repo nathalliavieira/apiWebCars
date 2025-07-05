@@ -3,6 +3,9 @@ import prismaClient from "../../prisma";
 class ListAllCarsService{
     async execute(){
         const cars = await prismaClient.car.findMany({
+            orderBy: {
+                created_at: 'desc' // <- mais recente primeiro
+            },
             select:{
                 car_id: true,
                 car_name: true,

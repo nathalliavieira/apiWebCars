@@ -1,13 +1,23 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express, {Request, Response, NextFunction} from "express";
 import "express-async-errors"; //Sempre deve ser importada como segundo import
 import cors from "cors";
 import path from "path"; //1
 import { router } from "./routes";
 
+import fileUpload from "express-fileupload";
+
 //Primeiro inicializamos o projeto:
 const app = express();
 app.use(express.json()); //Dizemos pro nosso express que o tipo de dado que iremos usar é o json
 app.use(cors());
+app.use(fileUpload({
+    limits: {fileSize: 50 * 1024 * 1024}, //Arquivos no tamanho máximo de 50mb
+    useTempFiles: true,
+    tempFileDir: '/tmp/',
+}));
 
 app.use(router); //Aqui estamos dizendo que a rota da nossa navegação vem do nosso router
 
@@ -31,4 +41,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     })
 })
 
-app.listen(3333, () => console.log("Server online!")) //Aqui dizemos em qual porta queremos que nosso projeto rode (3333) e depois dizemos o callback (retorno)
+app.listen(process.env.PORT, () => console.log("Server online!")) //Aqui dizemos em qual porta queremos que nosso projeto rode (3333) e depois dizemos o callback (retorno)

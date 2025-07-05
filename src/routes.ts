@@ -21,7 +21,7 @@ import { SearchCarController } from "./controllers/car/SearchCarController";
 const router = Router();
 
 //criamos o nosso multer. Agora ele poderá ser usado como um middleware 
-const upload = multer(uploadConfig.upload("./tmp"));
+// const upload = multer(uploadConfig.upload("./tmp"));
 
 //-------ROTA USUARIO--------
 
@@ -37,7 +37,8 @@ router.get("/me", isAuthenticated, new DetailsUserController().handle);//lembran
 //-------ROTA FORM CARS--------
 
 //Rota de fornecer as informacoes do carro
-router.post("/car", isAuthenticated, upload.array("images",10), new CreateSaleController().handle);
+// router.post("/car", isAuthenticated, upload.array("images",10), new CreateSaleController().handle);
+router.post("/car", isAuthenticated, new CreateSaleController().handle);
 
 //Rota de listar todos os carros por usuário (no dashboard)
 router.get("/cars/detail", isAuthenticated, new ListAllCarsUserController().handle);

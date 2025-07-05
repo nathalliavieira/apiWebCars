@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  // output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -54,6 +54,7 @@ model Car{
 model CarImage{
   id String @id @default(uuid())
   url String
+  public_id String
 
   carId String
   car Car @relation(fields: [carId], references: [car_id], onDelete: Cascade)

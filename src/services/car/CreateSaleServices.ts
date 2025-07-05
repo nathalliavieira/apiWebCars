@@ -1,7 +1,10 @@
 import prismaClient from "../../prisma";
 
 interface SaleRequest{
-    images: string[];
+    images: {
+        url: string;
+        public_id: string;
+    }[];
     car_name: string;
     model: string;
     year: string;
@@ -16,7 +19,7 @@ interface SaleRequest{
 class CreateSaleServices{
     async execute({images, car_name, model, year, km, phone, city, price, description, user_id}: SaleRequest){
         //todas as informacoes sao obrigatorias, entao verificaremos:
-        if(!car_name || !model || !year || !km || !phone || !city || !price || !description){
+        if(!car_name || !model || !year || !km || !phone || !city || price === undefined || price === null || !description){
             throw new Error("Please, provide all information!");
         }
 
@@ -28,8 +31,9 @@ class CreateSaleServices{
         const car = await prismaClient.car.create({
             data:{
                 images: {
-                    create: images.map((url) => ({
-                        url,
+                    create: images.map((image) => ({
+                        url: image.url,
+                        public_id: image.public_id,
                     })),
                 },
                 car_name: car_name,
