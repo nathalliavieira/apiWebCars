@@ -11,6 +11,10 @@ class CreateSaleController{
 
         const user_id = req.user_id;
 
+        if (!user_id) {
+            return res.status(401).json({ error: "User not authenticated" });
+        }
+
         const priceInt = parseInt(price, 10);
 
         if(!req.files || Object.keys(req.files).length === 0){
