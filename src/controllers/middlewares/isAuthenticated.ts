@@ -2,7 +2,9 @@
 
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
+import dotenv from "dotenv";
 
+dotenv.config();
 interface Payload{
     sub: string;
 }
