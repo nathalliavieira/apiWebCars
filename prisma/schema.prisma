@@ -5,57 +5,57 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
-  // output   = "../src/generated/prisma"
+    provider = "prisma-client-js"
+    // output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User{ //Sempre a primeira letra do nosso model será uma letra maiúscula e por convencao será no singular
-  id String @id @default(uuid()) //Por padrao irá gerar um id aleatório através do uuid
-  name String
-  email String
-  password String
+    id String @id @default(uuid()) //Por padrao irá gerar um id aleatório através do uuid
+    name String
+    email String
+    password String
 
-  created_at DateTime? @default(now())
-  updated_at DateTime? @default(now())
+    created_at DateTime? @default(now())
+    updated_at DateTime? @default(now())
 
-  //Agora mapeamos a nossa categoria:
-  @@map("users") //Por convencao sempre iremos mapear nossa categoria no plurar
+    //Agora mapeamos a nossa categoria:
+    @@map("users") //Por convencao sempre iremos mapear nossa categoria no plurar
 
-  cars Car[] //Vamos linkar o nosso model car com o model user, porque um usuário pode ter mais de um carro cadastrado para venda
+    cars Car[] //Vamos linkar o nosso model car com o model user, porque um usuário pode ter mais de um carro cadastrado para venda
 }
 
 model Car{
-  car_id String @id @default(uuid())
-  car_name String
-  model String
-  year String
-  km String
-  phone String
-  city String
-  price Int
-  description String
+    car_id String @id @default(uuid())
+    car_name String
+    model String
+    year String
+    km String
+    phone String
+    city String
+    price Int
+    description String
 
-  created_at DateTime? @default(now())
-  updated_at DateTime? @default(now())
+    created_at DateTime? @default(now())
+    updated_at DateTime? @default(now())
 
-  user_id String //Criamos primeiro a constante na qual queremos referenciar ao model usuario
-  user User @relation(fields: [user_id], references: [id]) //Agora dizemos que estamos fazendo a relacao da constante que acabamos de criar (user_id) com a constante id do usuario, ou seja, ambas terao o mesmo valor
+    user_id String //Criamos primeiro a constante na qual queremos referenciar ao model usuario
+    user User @relation(fields: [user_id], references: [id]) //Agora dizemos que estamos fazendo a relacao da constante que acabamos de criar (user_id) com a constante id do usuario, ou seja, ambas terao o mesmo valor
 
-  images CarImage[]
+    images CarImage[]
 
-  @@map("cars")
+    @@map("cars")
 }
 
 model CarImage{
-  id String @id @default(uuid())
-  url String
-  public_id String
+    id String @id @default(uuid())
+    url String
+    public_id String
 
-  carId String
-  car Car @relation(fields: [carId], references: [car_id], onDelete: Cascade)
+    carId String
+    car Car @relation(fields: [carId], references: [car_id], onDelete: Cascade)
 }
