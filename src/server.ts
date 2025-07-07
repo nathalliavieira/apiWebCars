@@ -12,7 +12,11 @@ import fileUpload from "express-fileupload";
 //Primeiro inicializamos o projeto:
 const app = express();
 app.use(express.json()); //Dizemos pro nosso express que o tipo de dado que iremos usar é o json
-app.use(cors());
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 app.use(fileUpload({
     limits: {fileSize: 50 * 1024 * 1024}, //Arquivos no tamanho máximo de 50mb
     useTempFiles: true,
